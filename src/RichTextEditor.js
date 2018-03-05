@@ -154,7 +154,7 @@ export default class RichTextEditor extends Component {
 
           this.props.hiddenTitle && this.hideTitle();
           this.props.enableOnChange && this.enableOnChange();
-
+          
           this.props.editorInitializedCallback && this.props.editorInitializedCallback();
 
           break;
@@ -378,6 +378,10 @@ export default class RichTextEditor extends Component {
   }
   setContentHTML(html) {
     this._sendAction(actions.setContentHtml, html);
+  }
+
+  focusEndOfContent(isAsync) {
+    this._sendAction(actions.focusEndOfContent, isAsync);
   }
 
   blurTitleEditor() {

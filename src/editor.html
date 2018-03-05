@@ -1575,14 +1575,42 @@
 				$('#zss_editor_content').focus();
 			}
 
+			zss_editor.focusEndOfContent = function(isAsync) {
+				var focusEndOfContent = function() {
+					var el = document.getElementById('zss_editor_content')
+	
+					el.focus();
+					if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
+						var range = document.createRange();
+						range.selectNodeContents(el);
+						range.collapse(false);
+						var sel = window.getSelection();
+						sel.removeAllRanges();
+						sel.addRange(range);
+					} else if (typeof document.body.createTextRange != "undefined") {
+						var textRange = document.body.createTextRange();
+						textRange.moveToElementText(el);
+						textRange.collapse(false);
+						textRange.select();
+					}
+				}
+
+				if (isAsync) {
+					setTimeout(focusEndOfContent, 0)
+				}
+				else {
+					focusEndOfContent()
+				}
+			}
+
 			zss_editor.focusTitle = function() {
 				$('#zss_editor_title').focus();
 			}
 
 			zss_editor.focusEditor = function(editorId) {
-
 				// the following was taken from http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity/3866442#3866442
 				// and ensures we move the cursor to the end of the editor
+
 				var editor = $('#' + editorId);
 				var range = document.createRange();
 				range.selectNodeContents(editor.get(0));
@@ -1745,8 +1773,8 @@
 
 	<body>
 		<!-- ZSSRichTextEditor Editable Content -->
-		<div id="zss_editor_title" class="zss_editor_title" contenteditable="true" placeholder="" disableLineBreaks="true"></div>
-		<div id="separatorContainer"><hr></div>
+		<div style="display:none" id="zss_editor_title" class="zss_editor_title" contenteditable="true" placeholder="" disableLineBreaks="true"></div>
+		<div style="display:none" id="separatorContainer"><hr></div>
 		<div id="zss_editor_content" class="zss_editor_content" contenteditable="true" placeholder=""></div>
 		<div id="zss_editor_footer"></div>
 	</body>

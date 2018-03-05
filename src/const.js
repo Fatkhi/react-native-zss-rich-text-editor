@@ -13,6 +13,7 @@ export const actions = {
   blurContentEditor: 'BLUR_CONTENT_EDITOR',
   focusTitle: 'FOCUS_TITLE',
   focusContent: 'FOCUS_CONTENT',
+  focusEndOfContent: 'FOCUS_END_OF_CONTENT',
 
   setBold: 'bold',
   setItalic: 'italic',
